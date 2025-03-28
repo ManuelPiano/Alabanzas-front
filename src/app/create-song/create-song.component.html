@@ -1,0 +1,24 @@
+<div class="container my-5">
+    <h2 class="text-center text-primary">{{ id ? 'Actualizar Canción' : 'Crear Canción' }}</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Título</label>
+        <input type="text" id="title" class="form-control" [(ngModel)]="title" name="title" required />
+      </div>
+      <div class="mb-3">
+        <label for="artist" class="form-label">Artista</label>
+        <input type="text" id="artist" class="form-control" [(ngModel)]="artist" name="artist" required />
+      </div>
+      <div class="mb-3">
+        <label for="lyrics" class="form-label">Letra</label>
+        <textarea id="lyrics" class="form-control" [(ngModel)]="lyrics" name="lyrics" rows="5" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="chords" class="form-label">Habilitar</label>
+        <input type="checkbox" id="active" class="form-check-input" [(ngModel)]="active" name="active" />
+      </div>
+      <button type="submit" class="btn btn-success w-100">
+        {{ id ? 'Actualizar Canción' : 'Crear Canción' }}
+      </button>
+    </form>
+  </div>

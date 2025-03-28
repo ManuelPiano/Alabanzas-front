@@ -1,0 +1,12 @@
+.container {
+    background-color: #f8f9fa;
+  }
+  .card {
+    border-radius: 0.5rem;
+  }
+
+  :host {
+    display: flex;
+    justify-content: center;
+    max-height: 90vh;
+  }

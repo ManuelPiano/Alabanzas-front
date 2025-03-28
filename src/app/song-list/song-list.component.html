@@ -1,21 +1,41 @@
 <div class="container my-5">
-    <!-- Título -->
-    <div class="text-center mb-4">
-        <img src="/assets/logo iglesia blanco.png" class="img-fluid" alt="logo" style="max-width: 40vw;">
-      <h2 class="display-4 text-primary">Lista de Canciones</h2>
-      <p class="lead text-secondary">Explora y selecciona tus canciones favoritas para alabar.</p>
-    </div>
-  
-    <!-- Lista de canciones -->
-    <div class="row">
-      <div class="col-12">
-        <ul class="list-group">
-          <li *ngFor="let song of songs" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+  <!-- Título -->
+  <div class="text-center mb-4">
+    <img src="assets/logo iglesia blanco.png" class="img-fluid" alt="logo" style="max-width: 40vw;">
+    <h2 class="display-4 text-primary">Lista de Canciones</h2>
+    <p class="lead text-secondary">Semana Santa 2025</p>
+  </div>
+
+  <!-- Botón para agregar canción (solo si está logueado) -->
+  <div class="text-end mb-3" *ngIf="isLoggedIn">
+    <button class="btn btn-success" (click)="goToCreateSong()">Agregar Canción</button>
+  </div>
+  <div class="text-end mb-3" *ngIf="isLoggedIn">
+    <button class="btn btn-success" (click)="showAll()">Mostrar Todo</button>
+  </div>
+  <div class="text-end mb-3" *ngIf="!isLoggedIn">
+    <button class="btn btn-outline-primary btn-sm" (click)="goToLogin()">
+      <i class="bi bi-box-arrow-in-right"></i> <!-- Ícono de Bootstrap Icons -->
+    </button>
+  </div>
+
+  <!-- Lista de canciones -->
+  <div class="row">
+    <div class="col-12">
+      <ul class="list-group">
+        <li *ngFor="let song of songs" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2">
+          <div class="d-flex flex-column flex-grow-1">
             <span class="fw-bold">{{ song.title }}</span>
             <span class="text-muted">{{ song.author }}</span>
-            <button class="btn btn-primary btn-sm" (click)="goToSong(song.id)">Ver Detalles</button>
-          </li>
-        </ul>
-      </div>
+          </div>
+          <div class="d-flex">
+            <!-- Botón para ver acordes -->
+            <button class="btn btn-primary btn-sm ms-3" (click)="goToSong(song.id)">Ver Acordes</button>
+            <!-- Botón para editar canción -->
+            <button *ngIf="isLoggedIn" class="btn btn-warning btn-sm ms-2" (click)="goToEditSong(song)">Editar</button>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
