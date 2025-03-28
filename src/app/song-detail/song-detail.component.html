@@ -1,0 +1,24 @@
+<div class="container my-5">
+    <!-- Título de la canción -->
+    <div class="text-center mb-4">
+      <h2 class="display-4 text-primary">{{ song?.title }}</h2>
+    </div>
+  
+    <!-- Controles de transposición -->
+    <div class="controls text-center mb-3">
+      <button class="btn btn-success me-2" (click)="transposeSong(1)">Subir acorde (+1)</button>
+      <button class="btn btn-danger" (click)="transposeSong(-1)">Bajar acorde (-1)</button>
+    </div>
+  
+    <!-- Controles de tamaño de texto -->
+    <div class="aumentar-texto text-center mb-4">
+      <button class="btn btn-secondary me-2" (click)="increaseFontSize()">Aumentar texto</button>
+      <button class="btn btn-secondary" (click)="decreaseFontSize()">Disminuir texto</button>
+    </div>
+  
+    <!-- Letra de la canción -->
+    <pre class="lyrics bg-light p-3 rounded border" [innerHTML]="safeLyrics"></pre>    <!-- Botón para regresar -->
+    <div class="text-center mt-4">
+      <button class="btn btn-primary" (click)="goBack()">Regresar a la lista de canciones</button>
+    </div>
+  </div>
