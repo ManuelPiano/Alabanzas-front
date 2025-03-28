@@ -65,4 +65,7 @@ export class CreateSongComponent implements OnInit {
       alert('Por favor, completa todos los campos.');
     }
   }
+  goBack() {
+    this.router.navigate(['/']);
+  }
 }
