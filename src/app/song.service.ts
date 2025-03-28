@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SongService {
   private apiUrl = environment.apiURL + 'songs';
+  private selectedSongId: number | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -31,10 +32,14 @@ export class SongService {
         throw new Error('No se pudo obtener las canciones.');
       }
       console.log('Canciones obtenidas:', response);
+      this.selectedSongId = id; // Guardar el ID de la canción seleccionada
       return response;
     } catch (error) {
       console.error('Error al obtener las canciones:', error);
       throw error;
     }
+  }
+  getSelectedSongId(): number | null {
+    return this.selectedSongId;
   }
 }

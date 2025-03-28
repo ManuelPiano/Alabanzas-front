@@ -24,6 +24,7 @@ export class SongListComponent implements OnInit {
   }
 
   goToSong(id: number) {
-    this.router.navigate(['/song', id]);
+    sessionStorage.setItem('selectedSongId', id.toString()); // Guardar el ID en sessionStorage
+    this.router.navigate(['/song']);
   }
 }

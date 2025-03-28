@@ -21,8 +21,12 @@ export class SongDetailComponent implements OnInit {
     
   }
   async ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('ID de la canción:', id);
+    const id = Number(sessionStorage.getItem('selectedSongId')); // Obtener el ID desde sessionStorage
+    if (!id) {
+      console.error('No se seleccionó ninguna canción.');
+      return;
+    }
+  
     try {
       this.song = await this.songService.getSongById(id);
       this.transposedLyrics = this.song.lyrics;
