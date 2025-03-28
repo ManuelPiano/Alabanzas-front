@@ -1,26 +1,26 @@
-<div class="container my-5 d-flex flex-column align-items-center">
+<div class="container d-flex flex-column align-items-center">
   <!-- Título de la canción -->
-  <div class="text-center mb-4">
+  <div class="text-center">
     <h2 class="display-4 text-primary">{{ song?.title }}</h2>
   </div>
 
   <!-- Controles de transposición -->
-  <div class="controls text-center mb-3">
-    <button class="btn btn-success me-2" (click)="transposeSong(1)">Subir acorde (+1)</button>
-    <button class="btn btn-danger" (click)="transposeSong(-1)">Bajar acorde (-1)</button>
+  <div class="controls text-center mb-2">
+    <button class="btn btn-success btn-sm me-1" (click)="transposeSong(1)">Subir (+1)</button>
+    <button class="btn btn-danger btn-sm" (click)="transposeSong(-1)">Bajar (-1)</button>
   </div>
-
+  
   <!-- Controles de tamaño de texto -->
-  <div class="aumentar-texto text-center mb-4">
-    <button class="btn btn-secondary me-2" (click)="increaseFontSize()">Aumentar texto</button>
-    <button class="btn btn-secondary" (click)="decreaseFontSize()">Disminuir texto</button>
+  <div class="aumentar-texto text-center mb-2">
+    <button class="btn btn-secondary btn-sm me-1" (click)="increaseFontSize()">+A</button>
+    <button class="btn btn-secondary btn-sm" (click)="decreaseFontSize()">-A</button>
   </div>
 
   <!-- Letra de la canción -->
-  <pre class="lyrics bg-light p-3 rounded border text-center" [innerHTML]="safeLyrics"></pre>
+  <pre class="lyrics bg-light rounded border text-center" [innerHTML]="safeLyrics"></pre>
   
   <!-- Botón para regresar -->
-  <div class="text-center mt-4">
-    <button class="btn btn-primary" (click)="goBack()">Regresar a la lista de canciones</button>
+  <div class="text-center">
+    <button class="btn btn-primary btn-sm me-1" (click)="goBack()">Regresar a la lista de canciones</button>
   </div>
-</div>
+</div> 
