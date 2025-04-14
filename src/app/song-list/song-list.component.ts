@@ -15,6 +15,7 @@ export class SongListComponent implements OnInit {
 
   songs: any[] = [];
   isLoggedIn: boolean = false;
+  diaSemana: string = '';
 
   constructor(private songService: SongService, private router: Router, private authService: AuthService ) {}
   async showAll() {
@@ -27,6 +28,11 @@ export class SongListComponent implements OnInit {
       this.songs = allSongs.filter(song => song.active === true);
       console.log('Canciones obtenidas:', this.songs);
       this.isLoggedIn = this.authService.isAuthenticated(); // Verifica si el usuario está autenticado
+      const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+      const fechaActual = new Date();
+      const dia = fechaActual.getDay();
+      this.diaSemana = dias[dia]; // Obtiene el nombre del día de la semana
+      console.log('Día de la semana:', this.diaSemana);
     } catch (error) {
       console.error('Error al cargar las canciones:', error);
     }
