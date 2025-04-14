@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SongService } from '../song.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -9,12 +9,32 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrls: ['./song-detail.component.scss'],
 })
 export class SongDetailComponent implements OnInit {
+  previousSong() {
+    const currentSongId = Number(sessionStorage.getItem('selectedSongId'));
+    
+    // Verificar si el ID es menor o igual a 1
+    if (currentSongId <= 1) {
+      console.error('No hay canciones anteriores. El ID debe ser mayor a 1.');
+      alert('No hay canciones anteriores.'); // Mensaje de alerta al usuario
+      return; // Detener la ejecución del método
+    }
+  
+    const previousSongId = currentSongId - 1; // Decrementar el ID de la canción
+    sessionStorage.setItem('selectedSongId', previousSongId.toString()); // Guardar el nuevo ID en sessionStorage
+    window.location.reload(); // Recargar la página para mostrar la nueva canción
+  }
+nextSong() {
+    const currentSongId = Number(sessionStorage.getItem('selectedSongId'));
+    const nextSongId = currentSongId + 1; // Incrementar el ID de la canción
+    sessionStorage.setItem('selectedSongId', nextSongId.toString()); // Guardar el nuevo ID en sessionStorage
+    window.location.reload(); // Recargar la página para mostrar la nueva canción
+}
   song: any = {};
   transposedLyrics: string = '';
   // Variable para almacenar el número de transposición acumulada
   transpositionSteps: number = 0;
 
-  constructor(private route: ActivatedRoute, private songService: SongService,
+  constructor(private router: Router, private songService: SongService,
               private sanitizer: DomSanitizer
     
   ) {
@@ -29,6 +49,11 @@ export class SongDetailComponent implements OnInit {
   
     try {
       this.song = await this.songService.getSongById(id);
+      if (this.song.active === false) {
+        console.error('La canción no está activa.');
+        alert('No hay mas canciones para ahora.'); // Mensaje de alerta al usuario
+        this.router.navigate(['/']); // Redirigir a la lista de canciones
+      }
       this.transposedLyrics = this.song.lyrics;
       console.log('Canción obtenida:', this.song);
     } catch (error) {

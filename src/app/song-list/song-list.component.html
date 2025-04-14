@@ -24,9 +24,15 @@
   <div class="row">
     <div class="col-12">
       <ul class="list-group">
-        <li *ngFor="let song of songs" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2">
+        <li *ngFor="let song of songs; let i = index" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2">
           <div class="d-flex flex-column flex-grow-1">
-            <span class="fw-bold">{{ song.title }}</span>
+            <span class="fw-bold">
+              {{ song.title }}
+              <!-- Badge de "Comodín" para las últimas dos canciones -->
+              <span *ngIf="i >= songs.length - 2" class="badge bg-warning text-dark ms-2">Comodín</span>
+              <!-- Badge de "Ofrenda" si el título incluye la palabra "Ofrenda" -->
+              <span *ngIf="song.title.includes('Ofrenda')" class="badge bg-info text-dark ms-2">Ofrenda</span>
+            </span>
             <span class="text-muted">{{ song.author }}</span>
           </div>
           <div class="d-flex">

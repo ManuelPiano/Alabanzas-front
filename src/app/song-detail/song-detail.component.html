@@ -20,7 +20,15 @@
   <pre class="lyrics bg-light rounded border text-center" [innerHTML]="safeLyrics"></pre>
   
   <!-- Botón para regresar -->
-  <div class="text-center">
-    <button class="btn btn-primary btn-sm me-1" (click)="goBack()">Regresar a la lista de canciones</button>
-  </div>
+   <div class="button-group mb-2 d-flex justify-content-center gap-2 mb-2">
+      <div class="text-center">
+        <button class="btn btn-danger btn-sm me-1" (click)="goBack()">Regresar a la lista de canciones</button>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary btn-sm me-1" (click)="nextSong()">Siguiente Canción -></button>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary btn-sm me-1" (click)="previousSong()">Canción Anterior <-</button>
+      </div>
+   </div>
 </div> 
