@@ -17,6 +17,14 @@
         <label for="chords" class="form-label">Habilitar</label>
         <input type="checkbox" id="active" class="form-check-input" [(ngModel)]="active" name="active" />
       </div>
+      <div class="mb-3">
+        <label for="comodin" class="form-label">Comodín</label>
+        <input type="checkbox" id="comodin" class="form-check-input" [(ngModel)]="comodin" name="comodin" />
+      </div>
+      <div class="mb-3">
+        <label for="ofrenda" class="form-label">Ofrenda</label>
+        <input type="checkbox" id="ofrenda" class="form-check-input" [(ngModel)]="ofrenda" name="ofrenda" />
+      </div>
       <button type="submit" class="btn btn-success w-100">
         {{ id ? 'Actualizar Canción' : 'Crear Canción' }}
       </button>

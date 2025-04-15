@@ -17,6 +17,8 @@ export class CreateSongComponent implements OnInit {
   artist: string = '';
   lyrics: string = '';
   active: boolean = true;
+  ofrenda: boolean = false;
+  comodin: boolean = false;
 
   constructor(
     private songService: SongService,
@@ -38,7 +40,7 @@ export class CreateSongComponent implements OnInit {
     if (this.title && this.artist && this.lyrics) {
       if (this.id) {
         // Si hay un ID, actualiza la canción
-        this.songService.updateSong(this.id, this.title, this.artist, this.lyrics, this.active)
+        this.songService.updateSong(this.id, this.title, this.artist, this.lyrics, this.active, this.ofrenda, this.comodin)
           .then((response) => {
             console.log('Canción actualizada:', response);
             alert('Canción actualizada exitosamente');
@@ -50,7 +52,7 @@ export class CreateSongComponent implements OnInit {
           });
       } else {
         // Si no hay un ID, crea una nueva canción
-        this.songService.createSong(this.title, this.artist, this.lyrics, this.active)
+        this.songService.createSong(this.title, this.artist, this.lyrics, this.active, this.ofrenda, this.comodin)
           .then((response) => {
             console.log('Canción creada:', response);
             alert('Canción creada exitosamente');

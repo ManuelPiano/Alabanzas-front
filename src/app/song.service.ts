@@ -41,22 +41,25 @@ export class SongService {
     return this.selectedSongId;
   }
 
-  async createSong(title: string, artist: string, lyrics: string, active:boolean): Promise<any> {
+  async createSong(title: string, artist: string, lyrics: string, active:boolean, ofrenda: boolean, comodin: boolean): Promise<any> {
     const params = new HttpParams()
       .set('title', title)
       .set('author', artist)
       .set('lyrics', lyrics)
-      .set('active', active); 
-  
+      .set('active', active)
+      .set('ofrenda', ofrenda)
+      .set('comodin', comodin);
     return await this.http.post<any>(`${this.apiUrl}/create`, null, { params }).toPromise();
   }
 
-  async updateSong(id: number, title: string, artist: string, lyrics: string, active: boolean): Promise<any> {
+  async updateSong(id: number, title: string, artist: string, lyrics: string, active: boolean, ofrenda: boolean, comodin: boolean): Promise<any> {
     const params = new HttpParams()
       .set('title', title)
       .set('author', artist)
       .set('lyrics', lyrics)
-      .set('active', active.toString()); // Convertir booleano a string
+      .set('active', active.toString())
+      .set('ofrenda', ofrenda.toString())
+      .set('comodin', comodin.toString()); // Convertir booleano a string
   
     return await this.http.put<any>(`${this.apiUrl}/update/${id}`, null, { params }).toPromise();
   }
