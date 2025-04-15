@@ -3,7 +3,7 @@ import { SongService } from '../song.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth-service.service'; 
-
+import { SongDataService } from '../song-data.service'; // Importa el servicio de datos de la canción
 @Component({
   selector: 'app-song-list',
   templateUrl: './song-list.component.html',
@@ -17,7 +17,9 @@ export class SongListComponent implements OnInit {
   isLoggedIn: boolean = false;
   diaSemana: string = '';
 
-  constructor(private songService: SongService, private router: Router, private authService: AuthService ) {}
+  constructor(private songService: SongService, private router: Router, private authService: AuthService, 
+              private songDataService: SongDataService
+  ) {}
   async showAll() {
     const allSongs = await this.songService.getSongs();
     this.songs = allSongs;
@@ -26,6 +28,13 @@ export class SongListComponent implements OnInit {
     try {
       const allSongs = await this.songService.getSongs();
       this.songs = allSongs.filter(song => song.active === true);
+      this.songs.sort((a, b) => {
+        if (!a.comodin && !a.ofrenda) return -1; // Las canciones con comodin y ofrenda en false van primero
+        if (a.ofrenda && !a.comodin) return 1;  // Las canciones con ofrenda en true van después
+        if (a.comodin) return 2;                // Las canciones con comodin en true van al final
+        return 0;
+      });
+      this.songDataService.setSongs(this.songs); // Guarda las canciones en el servicio de datos
       console.log('Canciones obtenidas:', this.songs);
       this.isLoggedIn = this.authService.isAuthenticated(); // Verifica si el usuario está autenticado
       const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -38,8 +47,8 @@ export class SongListComponent implements OnInit {
     }
   }
 
-  goToSong(id: number) {
-    sessionStorage.setItem('selectedSongId', id.toString()); // Guardar el ID en sessionStorage
+  goToSong(song: any) {
+    this.songDataService.setSong(song);
     this.router.navigate(['/song']);
   }
   goToEditSong(song: any) {

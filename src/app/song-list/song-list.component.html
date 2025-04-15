@@ -37,7 +37,7 @@
           </div>
           <div class="d-flex">
             <!-- Botón para ver acordes -->
-            <button class="btn btn-primary btn-sm ms-3" (click)="goToSong(song.id)">Ver Acordes</button>
+            <button class="btn btn-primary btn-sm ms-3" (click)="goToSong(song)">Ver Acordes</button>
             <!-- Botón para editar canción -->
             <button *ngIf="isLoggedIn" class="btn btn-warning btn-sm ms-2" (click)="goToEditSong(song)">Editar</button>
           </div>
