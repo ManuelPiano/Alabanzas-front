@@ -20,7 +20,11 @@
         <i class="bi bi-box-arrow-in-right"></i> <!-- Ícono de Bootstrap Icons -->
       </button>
     </div>
-
+    <div class="text-end mb-3" *ngIf="isLoggedIn">
+      <button class="btn btn-outline-danger btn-sm" (click)="logOut()">
+        <i class="bi bi-person-plus"></i> <!-- Ícono de Bootstrap Icons -->
+      </button>
+    </div>
     <!-- Lista de canciones -->
     <div class="row">
       <div class="col-12">
@@ -33,7 +37,7 @@
                 <span *ngIf="song.comodin" class="badge bg-warning text-dark ms-2">Comodín</span>
                 <!-- Badge de "Ofrenda" si el título incluye la palabra "Ofrenda" -->
                 <span *ngIf="song.ofrenda" class="badge bg-info text-dark ms-2">Ofrenda</span>
-                <span *ngIf="!song.active" class="badge bg-secondary text-light ms-2">Ofrenda</span>
+                <span *ngIf="!song.active" class="badge bg-secondary text-light ms-2">Inactiva</span>
               </span>
               <span class="text-muted">{{ song.author }}</span>
             </div>

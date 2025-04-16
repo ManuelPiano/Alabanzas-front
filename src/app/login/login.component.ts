@@ -17,12 +17,18 @@ export class LoginComponent {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  onSubmit() {
-    if (this.username === 'admin' && this.password === 'admin') {
-      this.authService.login(); // Marca al usuario como logueado
-      alert('Inicio de sesión exitoso');
-      this.router.navigate(['/']); // Redirige a la lista de canciones
-    } else {
+  async onSubmit() {
+    try {
+      const response = await this.authService.loginWithBackend(this.username, this.password).toPromise();
+      if (response && response.token) {
+        this.authService.guardarToken(response.token);
+        alert('Inicio de sesión exitoso');
+        this.router.navigate(['/']); // Redirigir a la página principal
+      } else {
+        alert('Error: No se recibió token');
+      }
+    } catch (error) {
+      console.error('Error en login:', error);
       alert('Usuario o contraseña incorrectos');
     }
   }

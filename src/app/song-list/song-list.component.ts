@@ -37,6 +37,7 @@ export class SongListComponent implements OnInit {
       this.songDataService.setSongs(this.songs); // Guarda las canciones en el servicio de datos
       console.log('Canciones obtenidas:', this.songs);
       this.isLoggedIn = this.authService.isAuthenticated(); // Verifica si el usuario está autenticado
+      console.log('Usuario autenticado:', this.isLoggedIn);
       const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
       const fechaActual = new Date();
       const dia = fechaActual.getDay();
@@ -66,5 +67,11 @@ export class SongListComponent implements OnInit {
   }
   goToLogin() {
     this.router.navigate(['/login']); // Redirige al componente de login
+  }
+  logOut() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    alert('Sesión cerrada');
+    this.router.navigate(['/']); // Redirige a la página principal
   }
 }
