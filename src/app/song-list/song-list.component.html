@@ -33,6 +33,7 @@
                 <span *ngIf="song.comodin" class="badge bg-warning text-dark ms-2">Comodín</span>
                 <!-- Badge de "Ofrenda" si el título incluye la palabra "Ofrenda" -->
                 <span *ngIf="song.ofrenda" class="badge bg-info text-dark ms-2">Ofrenda</span>
+                <span *ngIf="!song.active" class="badge bg-secondary text-light ms-2">Ofrenda</span>
               </span>
               <span class="text-muted">{{ song.author }}</span>
             </div>
