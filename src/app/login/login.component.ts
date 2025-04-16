@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-login',
@@ -15,21 +16,23 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService
+              , private alertService: AlertService
+  ) {}
 
   async onSubmit() {
     try {
       const response = await this.authService.loginWithBackend(this.username, this.password).toPromise();
       if (response && response.token) {
         this.authService.guardarToken(response.token);
-        alert('Inicio de sesión exitoso');
+        this.alertService.showAlert('Inicio de sesión exitoso', 'success');
         this.router.navigate(['/']); // Redirigir a la página principal
       } else {
-        alert('Error: No se recibió token');
+        this.alertService.showAlert('Error al iniciar sesión', 'error');
       }
     } catch (error) {
       console.error('Error en login:', error);
-      alert('Usuario o contraseña incorrectos');
+      this.alertService.showAlert('Error', 'error en el inicio de sesión');
     }
   }
 }

@@ -1,32 +1,204 @@
-pre {
-    height: 75vh;
-    width: 100%;
-    display: block;
-    overflow: auto;
-    background-color: #f8f9fa;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    max-height: 80vh;
-}
-.container {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    max-height: 100vh;
-}
-.lyrics {
-    white-space: pre-wrap;
-    font-family: inherit;
+// Variables
+$primary-color: #3f51b5;
+$secondary-color: #ff4081;
+$background-color: #f9f9f9;
+$chord-color: #e91e63;
+$text-color: #333;
+$light-gray: #f0f0f0;
+$dark-gray: #666;
+$border-radius: 8px;
+$box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-    .chord {
-        color: red;
-        font-weight: bold;
-    }
-}
-
+// Estilos generales
 :host {
-    display: flex;
-    justify-content: center;
-    max-height: 90vh;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: $background-color;
+  font-family: 'Roboto', sans-serif;
+}
+
+.song-viewer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1000px;
+  height: 100vh;
+  padding: 0;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: $box-shadow;
+}
+
+// Cabecera
+.song-header {
+  padding: 1rem;
+  background-color: $primary-color;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.song-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.song-author {
+  margin: 0.3rem 0 1rem;
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0.9;
+}
+
+// Controles principales
+.main-controls {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 0.5rem;
+}
+
+.transpose-controls, .font-controls {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: $border-radius;
+  padding: 0.3rem 0.5rem;
+}
+
+.transpose-indicator {
+  display: inline-block;
+  min-width: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+// Botones
+.btn-transpose, .btn-font {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  &:active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Contenido de la canción
+.song-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.lyrics {
+  white-space: pre-wrap;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $text-color;
+  padding: 1rem;
+  margin: 0;
+  background-color: white;
+  border-radius: $border-radius;
+  
+  .chord {
+    color: $chord-color;
+    font-weight: bold;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: $chord-color;
+      opacity: 0.5;
+    }
+  }
+}
+
+// Barra de navegación
+.navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem;
+  background-color: $light-gray;
+  border-top: 1px solid #ddd;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  
+  i {
+    font-size: 1rem;
+  }
+}
+
+.prev-btn, .next-btn {
+  background-color: $primary-color;
+  color: white;
+  
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.home-btn {
+  background-color: $secondary-color;
+  color: white;
+  
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .btn-text {
+    display: none;
+  }
+  
+  .nav-btn {
+    padding: 0.7rem;
+  }
+  
+  .main-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+// Animaciones
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.chord:hover {
+  animation: pulse 0.5s ease;
 }

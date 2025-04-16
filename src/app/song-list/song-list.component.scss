@@ -1,9 +1,41 @@
-.background-container {
-    position: relative;
-    overflow: hidden;
+// Variables SCSS
+$primary-color: #3f51b5;
+$secondary-color: #ff4081;
+$success-color: #4caf50;
+$warning-color: #ff9800;
+$danger-color: #f44336;
+$info-color: #2196f3;
+$light-color: #f5f5f5;
+$dark-color: #212121;
+$text-color: #333;
+$text-light: #fff;
+$text-muted: #757575;
+$border-radius: 12px;
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s ease;
+
+// Mixins SCSS
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin hover-transform {
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
+}
+
+// Fondo animado mejorado
+.background-container {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #f9f9f9;
   
-  .background-container::before {
+  &::before {
     content: '';
     position: absolute;
     top: 0;
@@ -12,16 +44,288 @@
     height: 100%;
     background: url('../../assets/musicians.jpg') no-repeat center center;
     background-size: cover;
-    opacity: 0.2; /* Marca de agua */
-    animation: moveBackground 20s linear infinite;
-    z-index: -1; /* Asegura que esté detrás del contenido */
+    opacity: 0.1;
+    animation: moveBackground 60s linear infinite;
+    z-index: -1;
+    filter: blur(1px);
+  }
+}
+
+@keyframes moveBackground {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+// Contenedor principal
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+}
+
+// Cabecera mejorada
+.logo-container {
+  margin-bottom: 1.5rem;
+  
+  .logo-image {
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    transition: $transition;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}
+
+.main-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: $primary-color;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.5px;
+}
+
+.subtitle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: $text-muted;
+    margin: 0;
   }
   
-  @keyframes moveBackground {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
+  .event-day {
+    font-weight: 500;
+    color: $secondary-color;
+  }
+}
+
+// Panel de acciones
+.action-panel {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+  
+  .admin-actions, 
+  .login-action {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+}
+
+// Botones de acción
+.btn-action {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  @include flex-center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  
+  &.btn-add {
+    background-color: $success-color;
+    color: $text-light;
+    
+    &:hover {
+      background-color: darken($success-color, 8%);
+      @include hover-transform;
     }
   }
+  
+  &.btn-show-all {
+    background-color: $info-color;
+    color: $text-light;
+    
+    &:hover {
+      background-color: darken($info-color, 8%);
+      @include hover-transform;
+    }
+  }
+  
+  &.btn-login {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: $primary-color;
+    color: $text-light;
+    
+    &:hover {
+      background-color: darken($primary-color, 8%);
+      @include hover-transform;
+    }
+  }
+  
+  &.btn-logout {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: $danger-color;
+    color: $text-light;
+    
+    &:hover {
+      background-color: darken($danger-color, 8%);
+      @include hover-transform;
+    }
+  }
+}
+
+// Contenedor de canciones
+.songs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+// Tarjeta de canción
+.song-card {
+  background-color: white;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: $box-shadow;
+  transition: $transition;
+  animation: fadeIn 0.5s ease-out forwards;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+  
+  .song-content {
+    padding: 1.5rem;
+  }
+  
+  .song-info {
+    margin-bottom: 1.2rem;
+    
+    .song-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: $text-color;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.3;
+    }
+    
+    .song-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .song-author {
+      font-size: 0.9rem;
+      color: $text-muted;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  .song-actions {
+    display: flex;
+    gap: 0.8rem;
+  }
+}
+
+// Badges
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  
+  &.badge-comodin {
+    background-color: rgba($warning-color, 0.15);
+    color: darken($warning-color, 15%);
+  }
+  
+  &.badge-ofrenda {
+    background-color: rgba($info-color, 0.15);
+    color: darken($info-color, 15%);
+  }
+  
+  &.badge-inactive {
+    background-color: rgba($text-muted, 0.15);
+    color: $text-muted;
+  }
+}
+
+// Botones de acción de canción
+.btn-song {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  @include flex-center;
+  
+  &.btn-view {
+    background-color: $primary-color;
+    color: $text-light;
+    
+    &:hover {
+      background-color: darken($primary-color, 8%);
+    }
+  }
+  
+  &.btn-edit {
+    background-color: $warning-color;
+    color: $text-light;
+    
+    &:hover {
+      background-color: darken($warning-color, 8%);
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Aplicar animación con retraso para cada tarjeta
+@for $i from 1 through 20 {
+  .song-card:nth-child(#{$i}) {
+    animation-delay: #{$i * 0.05}s;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2.2rem;
+  }
+  
+  .songs-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-panel {
+    justify-content: center;
+    
+    .admin-actions, 
+    .login-action {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

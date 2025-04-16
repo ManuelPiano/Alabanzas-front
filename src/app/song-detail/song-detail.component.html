@@ -1,34 +1,54 @@
-<div class="container d-flex flex-column align-items-center">
-  <!-- Título de la canción -->
-  <div class="text-center">
-    <h2 class="display-4 text-primary">{{ song?.title }}</h2>
+<div class="song-viewer">
+  <!-- Cabecera con título y controles principales -->
+  <div class="song-header">
+    <h1 class="song-title">{{ song?.title }}</h1>
+    <p class="song-author" *ngIf="song?.author">{{ song?.author }}</p>
+    
+    <!-- Controles principales -->
+    <div class="main-controls">
+      <div class="transpose-controls">
+        <button class="btn-transpose" (click)="transposeSong(-1)" title="Bajar tono">
+          <i class="fas fa-arrow-down"></i>
+        </button>
+        <span class="transpose-indicator">{{ transpositionSteps > 0 ? '+' + transpositionSteps : transpositionSteps }}</span>
+        <button class="btn-transpose" (click)="transposeSong(1)" title="Subir tono">
+          <i class="fas fa-arrow-up"></i>
+        </button>
+        <span class="transpose-label">Transportar</span>
+      </div>
+      
+      <div class="font-controls">
+        <button class="btn-font" (click)="decreaseFontSize()" title="Reducir tamaño">
+          <i class="fas fa-font"></i><i class="fas fa-minus"></i>
+        </button>
+        <button class="btn-font" (click)="increaseFontSize()" title="Aumentar tamaño">
+          <i class="fas fa-font"></i><i class="fas fa-plus"></i>
+        </button>
+        <span class="font-size-indicator">Tamaño texto:{{ fontSize }}</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Controles de transposición -->
-  <div class="controls text-center mb-2">
-    <button class="btn btn-success btn-sm me-1" (click)="transposeSong(1)">Subir (+1)</button>
-    <button class="btn btn-danger btn-sm" (click)="transposeSong(-1)">Bajar (-1)</button>
+  <!-- Contenido de la canción -->
+  <div class="song-content">
+    <pre class="lyrics" [innerHTML]="safeLyrics"></pre>
   </div>
   
-  <!-- Controles de tamaño de texto -->
-  <div class="aumentar-texto text-center mb-2">
-    <button class="btn btn-secondary btn-sm me-1" (click)="increaseFontSize()">+A</button>
-    <button class="btn btn-secondary btn-sm" (click)="decreaseFontSize()">-A</button>
+  <!-- Barra de navegación inferior -->
+  <div class="navigation-bar">
+    <button class="nav-btn prev-btn" (click)="previousSong()" title="Canción anterior">
+      <i class="fas fa-step-backward"></i>
+      <span class="btn-text">Anterior</span>
+    </button>
+    
+    <button class="nav-btn home-btn" (click)="goBack()" title="Volver a la lista">
+      <i class="fas fa-home"></i>
+      <span class="btn-text">Lista</span>
+    </button>
+    
+    <button class="nav-btn next-btn" (click)="nextSong()" title="Siguiente canción">
+      <span class="btn-text">Siguiente</span>
+      <i class="fas fa-step-forward"></i>
+    </button>
   </div>
-
-  <!-- Letra de la canción -->
-  <pre class="lyrics bg-light rounded border text-center" [innerHTML]="safeLyrics"></pre>
-  
-  <!-- Botón para regresar -->
-   <div class="button-group mb-2 d-flex justify-content-center gap-2 mb-2">
-      <div class="text-center">
-        <button class="btn btn-danger btn-sm me-1" (click)="goBack()">Regresar a la lista de canciones</button>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-primary btn-sm me-1" (click)="nextSong()">Siguiente Canción -></button>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-primary btn-sm me-1" (click)="previousSong()">Canción Anterior <-</button>
-      </div>
-   </div>
-</div> 
+</div>

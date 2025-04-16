@@ -1,54 +1,71 @@
 <div class="background-container">
   <div class="container my-5">
-    <!-- Título -->
-    <div class="text-center mb-4">
-      <img src="assets/logo iglesia blanco.png" class="img-fluid" alt="logo" style="max-width: 40vw;">
-      <h2 class="display-4 text-primary">Lista de Canciones</h2>
-      <p class="lead text-secondary">Semana Santa 2025</p>
-      <p class="lead text-secondary">{{this.diaSemana}} Santo</p>
+    <!-- Cabecera con logo y título -->
+    <div class="text-center mb-5">
+      <div class="logo-container mb-3">
+        <img src="assets/logo iglesia blanco.png" class="img-fluid logo-image" alt="logo">
+      </div>
+      <h1 class="main-title">Lista de Canciones</h1>
+      <div class="subtitle-container">
+        <p class="subtitle">Semana Santa 2025</p>
+        <p class="subtitle event-day">{{this.diaSemana}} Santo</p>
+      </div>
     </div>
 
-    <!-- Botón para agregar canción (solo si está logueado) -->
-    <div class="text-end mb-3" *ngIf="isLoggedIn">
-      <button class="btn btn-success" (click)="goToCreateSong()">Agregar Canción</button>
+    <!-- Panel de acciones -->
+    <div class="action-panel mb-4">
+      <!-- Botones para usuarios logueados -->
+      <div class="admin-actions" *ngIf="isLoggedIn">
+        <button class="btn-action btn-add" (click)="goToCreateSong()">
+          <i class="bi bi-plus-circle-fill me-2"></i>Agregar Canción
+        </button>
+        <button class="btn-action btn-show-all" (click)="showAll()">
+          <i class="bi bi-list-ul me-2"></i>Mostrar Todo
+        </button>
+        <button class="btn-action btn-logout" (click)="confirmLogout()">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      </div>
+      
+      <!-- Botón de login para usuarios no logueados -->
+      <div class="login-action" *ngIf="!isLoggedIn">
+        <button class="btn-action btn-login" (click)="goToLogin()">
+          <i class="bi bi-box-arrow-in-right"></i>
+        </button>
+      </div>
     </div>
-    <div class="text-end mb-3" *ngIf="isLoggedIn">
-      <button class="btn btn-success" (click)="showAll()">Mostrar Todo</button>
-    </div>
-    <div class="text-end mb-3" *ngIf="!isLoggedIn">
-      <button class="btn btn-outline-primary btn-sm" (click)="goToLogin()">
-        <i class="bi bi-box-arrow-in-right"></i> <!-- Ícono de Bootstrap Icons -->
-      </button>
-    </div>
-    <div class="text-end mb-3" *ngIf="isLoggedIn">
-      <button class="btn btn-outline-danger btn-sm" (click)="logOut()">
-        <i class="bi bi-person-plus"></i> <!-- Ícono de Bootstrap Icons -->
-      </button>
-    </div>
+
     <!-- Lista de canciones -->
-    <div class="row">
-      <div class="col-12">
-        <ul class="list-group">
-          <li *ngFor="let song of songs; let i = index" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2">
-            <div class="d-flex flex-column flex-grow-1">
-              <span class="fw-bold">
-                {{ song.title }}
-                <!-- Badge de "Comodín" para las últimas dos canciones -->
-                <span *ngIf="song.comodin" class="badge bg-warning text-dark ms-2">Comodín</span>
-                <!-- Badge de "Ofrenda" si el título incluye la palabra "Ofrenda" -->
-                <span *ngIf="song.ofrenda" class="badge bg-info text-dark ms-2">Ofrenda</span>
-                <span *ngIf="!song.active" class="badge bg-secondary text-light ms-2">Inactiva</span>
+    <div class="songs-container">
+      <div class="song-card" *ngFor="let song of songs; let i = index">
+        <div class="song-content">
+          <div class="song-info">
+            <h3 class="song-title">{{ song.title }}</h3>
+            <div class="song-badges">
+              <span *ngIf="song.comodin" class="badge badge-comodin">
+                <i class="bi bi-star-fill me-1"></i>Comodín
               </span>
-              <span class="text-muted">{{ song.author }}</span>
+              <span *ngIf="song.ofrenda" class="badge badge-ofrenda">
+                <i class="bi bi-heart-fill me-1"></i>Ofrenda
+              </span>
+              <span *ngIf="!song.active" class="badge badge-inactive">
+                <i class="bi bi-dash-circle-fill me-1"></i>Inactiva
+              </span>
             </div>
-            <div class="d-flex">
-              <!-- Botón para ver acordes -->
-              <button class="btn btn-primary btn-sm ms-3" (click)="goToSong(song)">Ver Acordes</button>
-              <!-- Botón para editar canción -->
-              <button *ngIf="isLoggedIn" class="btn btn-warning btn-sm ms-2" (click)="goToEditSong(song)">Editar</button>
-            </div>
-          </li>
-        </ul>
+            <p class="song-author">
+              <i class="bi bi-person-fill me-1"></i>{{ song.author || 'Autor desconocido' }}
+            </p>
+          </div>
+          
+          <div class="song-actions">
+            <button class="btn-song btn-view" (click)="goToSong(song)">
+              <i class="bi bi-music-note-beamed me-1"></i>Ver Acordes
+            </button>
+            <button *ngIf="isLoggedIn" class="btn-song btn-edit" (click)="goToEditSong(song)">
+              <i class="bi bi-pencil-fill me-1"></i>Editar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

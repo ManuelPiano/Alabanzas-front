@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SongService } from '../song.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-create-song',
@@ -23,7 +24,8 @@ export class CreateSongComponent implements OnInit {
   constructor(
     private songService: SongService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -43,28 +45,28 @@ export class CreateSongComponent implements OnInit {
         this.songService.updateSong(this.id, this.title, this.artist, this.lyrics, this.active, this.ofrenda, this.comodin)
           .then((response) => {
             console.log('Canción actualizada:', response);
-            alert('Canción actualizada exitosamente');
-            this.router.navigate(['/songs']); // Redirige a la lista de canciones
+            this.alertService.showAlert('Canción actualizada exitosamente', 'success');
+            this.router.navigate(['/']); // Redirige a la lista de canciones
           })
           .catch((error) => {
             console.error('Error al actualizar la canción:', error);
-            alert(error.error.message || 'Error al actualizar la canción');
+            this.alertService.showAlert(error.error.message || 'Error al actualizar la canción', 'error');
           });
       } else {
         // Si no hay un ID, crea una nueva canción
         this.songService.createSong(this.title, this.artist, this.lyrics, this.active, this.ofrenda, this.comodin)
           .then((response) => {
             console.log('Canción creada:', response);
-            alert('Canción creada exitosamente');
-            this.router.navigate(['/songs']); // Redirige a la lista de canciones
+            this.alertService.showAlert('Canción creada exitosamente', 'success');
+            this.router.navigate(['/']); // Redirige a la lista de canciones
           })
           .catch((error) => {
             console.error('Error al crear la canción:', error);
-            alert(error.error.message || 'Error al crear la canción');
+            this.alertService.showAlert(error.error.message || 'Error al crear la canción', 'error');
           });
       }
     } else {
-      alert('Por favor, completa todos los campos.');
+      this.alertService.showAlert('Por favor completa todos los campos', 'error');
     }
   }
   goBack() {

@@ -3,7 +3,8 @@ import { SongService } from '../song.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth-service.service'; 
-import { SongDataService } from '../song-data.service'; // Importa el servicio de datos de la canción
+import { SongDataService } from '../song-data.service'; 
+import { AlertService } from '../alert.service';
 @Component({
   selector: 'app-song-list',
   templateUrl: './song-list.component.html',
@@ -18,7 +19,7 @@ export class SongListComponent implements OnInit {
   diaSemana: string = '';
 
   constructor(private songService: SongService, private router: Router, private authService: AuthService, 
-              private songDataService: SongDataService
+              private songDataService: SongDataService, private alertService: AlertService
   ) {}
   async showAll() {
     const allSongs = await this.songService.getSongs();
@@ -71,7 +72,17 @@ export class SongListComponent implements OnInit {
   logOut() {
     this.authService.logout();
     this.isLoggedIn = false;
-    alert('Sesión cerrada');
+    this.alertService.success('Has cerrado sesión exitosamente', '¡Éxito!');
     this.router.navigate(['/']); // Redirige a la página principal
+  }
+  confirmLogout() {
+    this.alertService.showConfirm(
+      '¿Cerrar sesión?', 
+      '¿Estás seguro de que deseas cerrar sesión?'
+    ).then((result) => {
+      if (result.isConfirmed) {
+        this.logOut();
+      }
+    });
   }
 }
